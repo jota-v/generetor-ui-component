@@ -6,16 +6,14 @@ body {
 }
 
 .hero-unit {
-    display: inline-block;
+    display: block;
     max-width: 330px;
     padding: 15px;
-    margin-top: 15px;
+    margin: 15px auto;
     font-size: 18px;
     font-weight: 200;
     line-height: 30px;
     text-align: left;
-    background: #FFF059;
-    border-radius: 15px;
 
     img {
         display: block;

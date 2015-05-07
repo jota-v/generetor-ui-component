@@ -1,6 +1,10 @@
 
-@import "../bower_components/bourbon/app/assets/stylesheets/bourbon";
+@import "_main__small";
+
+@media (min-width:768px) {
+    @import "_main__medium";
+}
 
 @media (min-width:1024px) {
-    // Your large styles @imports here
+    @import "_main__large";
 }

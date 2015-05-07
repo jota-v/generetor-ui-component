@@ -1,9 +1,9 @@
 {
-    "name": "generator-meli-plugin",
+    "name": "generator-ui-component",
     "version": "0.0.1",
     "description": "Scaffold a meli-plugin framework",
-    "repository": "jota-v/generator-meli-plugin",
-    "author": "Juan Vanni",
+    "repository": "mercadolibre/ui-generator_component",
+    "author": "Mercadolibre",
     "main": "app/index.js",
     "engines": {
         "node": ">=0.10.0",
@@ -17,19 +17,17 @@
     ],
     "keywords": [
         "yeoman-generator",
-        "meli",
+        "ui",
         "front-end",
-        "plugin"
+        "component"
     ],
     "dependencies": {
         "chalk": "^1.0.0",
-        "wiredep": "^2.2.2",
         "yeoman-generator": "^0.18.5",
         "yosay": "^1.0.0"
     },
     "peerDependencies": {
         "yo": ">=1.0.0",
-        "generator-mocha": ">=0.1.0",
         "gulp": ">=3.5.0"
     }
 }

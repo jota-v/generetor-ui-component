@@ -13,48 +13,32 @@
 
     <link rel="shortcut icon" href="http://static.mlstatic.com/org-img/ui/ml/favicon/favicon-1.0.0.ico"/>
 
-    <% if (includeChico) { %>
-    <!-- build:js scripts/vendor/mobile-detect.js -->
-    <script src="/bower_components/mobileDetect/mobile-detect.js"></script>
-    <!-- endbuild -->
+    <script src="mobile-detect.js"></script>
     <script>
         var md = new MobileDetect(window.navigator.userAgent);
         if (md.mobile()) {
-            document.write('<link rel="stylesheet" href="http://static.mlstatic.com/org-img/ch/mobile/1.1.1/chico.min.css">');
+            document.write('<link rel="stylesheet" href="http://static.mlstatic.com/org-img/ch/mobile/1.1.1/chico.min.css"><link rel="stylesheet" href="dist/main__small.css">');
         } else {
-            document.write('<link rel="stylesheet" href="http://static.mlstatic.com/org-img/ch/ui/1.1.1/chico.min.css">');
+            document.write('<link rel="stylesheet" href="http://static.mlstatic.com/org-img/ch/ui/1.1.1/chico.min.css"><link rel="stylesheet" href="dist/main__large.css">');
         }
     </script>
-    <% } %>
 
-    <!-- build:css styles/main__small.min.css -->
-    <link rel="stylesheet" href="styles/main__small.css">
-    <!-- endbuild -->
-    <!-- build:css styles/main__medium.min.css -->
-    <link rel="stylesheet" href="styles/main__medium.css">
-    <!-- endbuild -->
-    <!-- build:css styles/main__large.min.css -->
-    <link rel="stylesheet" href="styles/main__large.css">
-    <!-- endbuild -->
-
-    <!-- build:css styles/main.min.css -->
     <!--[if lt IE 9]>
         <link rel="stylesheet" href="styles/main.css">
     <![endif]-->
-    <!-- endbuild -->
 </head>
 
 <body>
 
     <div class="hero-unit">
-        <img src="images/yeoman.png">
-        <h1>You're ready to develop a MeLi plugin!</h1>
+        <img src="dist/yeoman.png">
+        <h1>You're ready to develop a UI Component!</h1>
         <p>You now have:</p>
         <ul>
-            <li>Gulp to handle tasks</li><% if (includeChico) { %>
-            <li>Chico</li><% } %><% if (includeSass) { %>
+            <li>Gulp to handle tasks</li>
+            <li>Chico</li><% if (includeMesh) { %>
+            <li>Mesh</li><% } %>
             <li>Sass</li>
-            <li>Bourbon</li><% } %>
             <li>CSS Autoprefixer</li>
             <li>Image optimization</li>
             <li>BrowserSync for multi-device testing</li>
@@ -62,24 +46,19 @@
         <small><a href="###">Read the docs</a></small>
     </div>
 
-    <% if (includeChico) { %>
-    <!-- build:js scripts/vendor/jquery.js -->
-    <script src="/bower_components/jquery/dist/jquery.js"></script>
-    <!-- endbuild -->
+
     <script>
         var md = new MobileDetect(window.navigator.userAgent);
         if (md.mobile()) {
-            document.write("<script src='http://static.mlstatic.com/org-img/ch/mobile/1.1.1/chico.min.js'>");
+            document.write('<script src="http://static.mlstatic.com/org-img/ch/vendor/jquery/jquery-1.10.2.min.js"></'+'script>');
+            document.write('<script src="http://static.mlstatic.com/org-img/ch/mobile/1.1.1/chico.min.js"></'+'script>');
         } else {
-            document.write("<script src='http://static.mlstatic.com/org-img/ch/ui/1.1.1/chico.min.js'>");
+            document.write('<script src="http://static.mlstatic.com/org-img/ch/vendor/jquery/jquery-1.10.2.min.js"></'+'script>');
+            document.write('<script src="http://static.mlstatic.com/org-img/ch/ui/1.1.1/chico.min.js"></'+'script>');
         }
     </script>
-    </script>
-    <% } %>
 
-    <!-- build:js scripts/main.min.js -->
-    <script src="scripts/main.js"></script>
-    <!-- endbuild -->
+    <script src="dist/main.js"></script>
 
 </body>
 </html>

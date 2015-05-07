@@ -4,7 +4,6 @@ var path = require('path');
 var yeoman = require('yeoman-generator');
 var yosay = require('yosay');
 var chalk = require('chalk');
-var wiredep = require('wiredep');
 
 module.exports = yeoman.generators.Base.extend({
     constructor: function() {
@@ -23,21 +22,30 @@ module.exports = yeoman.generators.Base.extend({
 
     prompting: function() {
         var done = this.async();
+        var basePath = path.basename(process.env.PWD);
+        var appName = this._.camelize(basePath);
 
-        this.log(yosay('\'Hello Tiger! Out of the box I include a gulpfile.js to build your component.'));
+        this.log(yosay('\'Hola Hola! Would you mind giving me some info so I can scafold your component?'));
 
         var prompts = [{
+            name: 'componentName',
+            message: 'What do you want to call your component? Allowed characters ^[a-zA-Z0-9]+$',
+            default: appName,
+        },{
+            name: 'componentDescription',
+            message: 'What is this component about? Short. Straight to the point.',
+        },{
+            name: 'componentContributor',
+            message: 'Who is participating in the project?',
+            default: 'Contributor - contributor@mercadolibre.com'
+        },{
             type: 'checkbox',
             name: 'features',
             message: 'What more would you like?',
             choices: [{
                 name: 'Mesh',
                 value: 'includeMesh',
-                checked: true
-            }, {
-                name: 'Chico',
-                value: 'includeChico',
-                checked: true
+                checked: false
             }]
         }];
 
@@ -48,8 +56,10 @@ module.exports = yeoman.generators.Base.extend({
                 return features.indexOf(feat) !== -1;
             };
 
-            this.includeSass = hasFeature('includeSass');
-            this.includeChico = hasFeature('includeChico');
+            this.componentName = answers.componentName;
+            this.componentDescription = answers.componentDescription;
+            this.componentContributor = answers.componentContributor;
+            this.includeMesh = hasFeature('includeMesh');
 
             done();
         }.bind(this));
@@ -58,82 +68,41 @@ module.exports = yeoman.generators.Base.extend({
     writing: {
         miscfiles: function () {
             this.template('_package.json', 'package.json');
-            this.template('editorconfig', '.editorconfig');
-            this.template('README.md');
-            this.template('Makefile');
+            this.template('_bower.json', 'bower.json');
+            this.template('README.md','README.md');
+            this.copy('gitignore', '.gitignore');
+            this.copy('gitattributes', '.gitattributes');
+            this.copy('editorconfig', '.editorconfig');
+            this.copy('Makefile','Makefile');
+            this.copy('main.js', 'src/scripts/main.js');
+            this.copy('mobile-detect.js', 'mobile-detect.js');
+            this.copy('yeoman.png', 'src/images/yeoman.png');
+        },
+
+        stylesheets: function() {
+            this.copy('_demo.scss', 'src/styles/_demo.scss');
+            this.copy('_main__small.scss', 'src/styles/_main__small.scss');
+            this.copy('_main__medium.scss', 'src/styles/_main__medium.scss');
+            this.copy('_main__large.scss', 'src/styles/_main__large.scss');
+            this.copy('main.scss', 'src/styles/main.scss');
+            this.copy('main__small.scss', 'src/styles/main__small.scss');
+            this.copy('main__medium.scss', 'src/styles/main__medium.scss');
+            this.copy('main__large.scss', 'src/styles/main__large.scss');
         },
 
         gulpfile: function() {
             this.template('gulpfile.js');
         },
 
-        gitfiles: function() {
-            this.copy('gitignore', '.gitignore');
-            this.copy('gitattributes', '.gitattributes');
-        },
-
-        bower: function() {
-            var bower = {
-                name: this._.slugify(this.appname),
-                private: true,
-                devDependencies: {}
-            };
-
-            bower.devDependencies.mobileDetect = "hgoebl/mobile-detect.js#~1.0.0";
-
-            if (this.includeChico) {
-                bower.devDependencies.jquery = '~2.1.1';
-                bower.devDependencies.chico = "https://github.com/mercadolibre/chico.git";
-            }
-
-            if (this.includeSass) {
-                bower.devDependencies.bourbon = '~4.2.2';
-            }
-
-            this.copy('bowerrc', '.bowerrc');
-            this.write('bower.json', JSON.stringify(bower, null, 2));
-        },
-
-        stylesheets: function() {
-            if (this.includeSass) {
-                this.copy('_demo.scss', 'src/styles/_demo.scss');
-                this.copy('main.scss', 'src/styles/main.scss');
-                this.copy('main__small.scss', 'src/styles/main__small.scss');
-                this.copy('main__medium.scss', 'src/styles/main__medium.scss');
-                this.copy('main__large.scss', 'src/styles/main__large.scss');
-            } else {
-                this.copy('main.css', 'src/styles/main.css');
-                this.copy('main__small.css', 'src/styles/main__small.css');
-                this.copy('main__medium.css', 'src/styles/main__medium.css');
-                this.copy('main__large.css', 'src/styles/main__large.css');
-            }
-        },
-
-        img: function() {
-            this.copy('yeoman.png', 'src/images/yeoman.png');
-        },
-
         writeIndex: function () {
-            this.template('index.html', 'src/index.html');
-        },
-
-        app: function() {
-            this.mkdir('src');
-            this.mkdir('src/scripts');
-            this.mkdir('src/styles');
-            this.mkdir('src/images');
-            this.copy('main.js', 'src/scripts/main.js');
+            this.template('index.html', 'index.html');
         }
     },
 
     install: function() {
         var howToInstall =
-            '\nAfter running ' +
-            chalk.yellow.bold('npm install & bower install') +
-            ', inject your' +
-            '\nfront end dependencies by running ' +
-            chalk.yellow.bold('gulp wiredep') +
-            '.';
+            '\nRun ' +
+            chalk.yellow.bold('npm install');
 
         if (this.options['skip-install']) {
             this.log(howToInstall);
