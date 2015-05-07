@@ -39,6 +39,8 @@ gulp.task('styles-min', ['styles'], function() {
 
 gulp.task('js', function() {
     return gulp.src('src/scripts/*.js')
+        .pipe($.jshint())
+        .pipe($.jshint.reporter('jshint-stylish'))
         .pipe(gulp.dest('dist'));
 });
 

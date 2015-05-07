@@ -29,7 +29,7 @@ module.exports = yeoman.generators.Base.extend({
 
         var prompts = [{
             name: 'componentName',
-            message: 'What do you want to call your component? Allowed characters ^[a-zA-Z0-9]+$',
+            message: 'How do you want to call your component? Allowed characters ^[a-zA-Z0-9]+$',
             default: appName,
         },{
             name: 'componentDescription',
@@ -70,6 +70,7 @@ module.exports = yeoman.generators.Base.extend({
             this.template('_package.json', 'package.json');
             this.template('_bower.json', 'bower.json');
             this.template('README.md','README.md');
+            this.copy('_jshintrc', '.jshintrc');
             this.copy('gitignore', '.gitignore');
             this.copy('gitattributes', '.gitattributes');
             this.copy('editorconfig', '.editorconfig');
