@@ -1,2 +1,2 @@
 
-console.log('MeLi Plugin');
+console.log('UI Component Ready!');

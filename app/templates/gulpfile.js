@@ -15,7 +15,7 @@ gulp.task('styles', function() {
         }))
         .pipe($.postcss([
             require('autoprefixer-core')({
-                browsers: ['last 5 version']
+                browsers: ['last 10 versions']
             })
         ]))
         .pipe($.sourcemaps.write())
